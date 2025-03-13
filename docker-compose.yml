@@ -1,8 +1,11 @@
 version: '3.9'
 
+networks:
+  ambev_network:
+    driver: bridge
+
 services:
   ambev.developerevaluation.webapi:
-    container_name: ambev_developer_evaluation_webapi
     image: ${DOCKER_REGISTRY-}ambevdeveloperevaluationwebapi
     build:
       context: .
@@ -11,11 +14,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__DefaultConnection=Host=ambev_developer_evaluation_database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
-      - MongoDbSettings__ConnectionString=mongodb://developer:ev4luAt10n@ambev_developer_evaluation_nosql:27017
+      - ConnectionStrings__DefaultConnection=Host=ambev_developerevaluation_database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
+      - MongoDbSettings__ConnectionString=mongodb://developer:ev4luAt10n@ambev_developerevaluation_nosql:27017
       - MongoDbSettings__DatabaseName=DeveloperEvaluation
       - MongoDbSettings__CollectionName=Sales
-      - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developer_evaluation_queue:5672
+      - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developerevaluation_queue:5672
       - RabbitMqSettings__QueueName=Worker-Sales
       - Jwt__SecretKey=a14a4ea06097293250cf89b033495bae94f7493703483f10fe661e5f459c5a697aedb85582bed201ad95b6c7eba70f57d59bc68737e348002e076487840cff042721a0020e3ab9db34426c617eb59f49691c9d5c041d4ab120b7d6efbdfe5e8a37fb13ea0aa6e6c6aed881a7e41a913d10a08ac639c371240586b38c9fbb6d213752e7216abeab82c0482e1f17af98e7e78d17d86a68ecda2e537a39aab4c0cb534b7e74e6acfb93e383029e32fba3ff339abdd74e4aa9203255bc92e2a2cedc5f1ca82c7292a8ea89150ee732250a68b982f70185614822bec3c02f9e073194790396618fc50b25479f38f5bb799b6cbaf340e1756d3b1991c5d449a0a095c7
     ports:
@@ -29,20 +32,21 @@ services:
       - ambev.developerevaluation.nosql
       - ambev.developerevaluation.queue
       - ambev.developerevaluation.worker
+    networks:
+      - ambev_network
 
   ambev.developerevaluation.worker:
-    container_name: ambev_developer_evaluation_worker
     image: ${DOCKER_REGISTRY-}ambevdeveloperevaluationworker
     build:
       context: .
       dockerfile: src/Ambev.DeveloperEvaluation.Worker/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=ambev_developer_evaluation_database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
-      - MongoDbSettings__ConnectionString=mongodb://developer:ev4luAt10n@ambev_developer_evaluation_nosql:27017
+      - ConnectionStrings__DefaultConnection=Host=ambev_developerevaluation_database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
+      - MongoDbSettings__ConnectionString=mongodb://developer:ev4luAt10n@ambev_developerevaluation_nosql:27017
       - MongoDbSettings__DatabaseName=DeveloperEvaluation
       - MongoDbSettings__CollectionName=Sales
-      - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developer_evaluation_queue:5672
+      - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developerevaluation_queue:5672
       - RabbitMqSettings__QueueName=Worker-Sales
       - Jwt__SecretKey=a14a4ea06097293250cf89b033495bae94f7493703483f10fe661e5f459c5a697aedb85582bed201ad95b6c7eba70f57d59bc68737e348002e076487840cff042721a0020e3ab9db34426c617eb59f49691c9d5c041d4ab120b7d6efbdfe5e8a37fb13ea0aa6e6c6aed881a7e41a913d10a08ac639c371240586b38c9fbb6d213752e7216abeab82c0482e1f17af98e7e78d17d86a68ecda2e537a39aab4c0cb534b7e74e6acfb93e383029e32fba3ff339abdd74e4aa9203255bc92e2a2cedc5f1ca82c7292a8ea89150ee732250a68b982f70185614822bec3c02f9e073194790396618fc50b25479f38f5bb799b6cbaf340e1756d3b1991c5d449a0a095c7
     volumes:
@@ -51,42 +55,40 @@ services:
       - ambev.developerevaluation.database
       - ambev.developerevaluation.nosql
       - ambev.developerevaluation.queue
+    networks:
+      - ambev_network
 
   ambev.developerevaluation.database:
-    container_name: ambev_developer_evaluation_database
     image: postgres:13
     environment:
       POSTGRES_DB: developer_evaluation
       POSTGRES_USER: developer
       POSTGRES_PASSWORD: ev@luAt10n
-    ports:
-      - "5432:5432"
     restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ambev_network
 
   ambev.developerevaluation.nosql:
-    container_name: ambev_developer_evaluation_nosql
     image: mongo:8.0
     environment:
       MONGO_INITDB_ROOT_USERNAME: developer
       MONGO_INITDB_ROOT_PASSWORD: ev4luAt10n
-    ports:
-      - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - ambev_network
 
   ambev.developerevaluation.queue:
-    container_name: ambev_developer_evaluation_queue
     image: rabbitmq:3.13-management
     environment:
       RABBITMQ_DEFAULT_USER: developer
       RABBITMQ_DEFAULT_PASS: ev4luAt10n
-    ports:
-      - "5672:5672"
-      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - ambev_network
 
 volumes:
   postgres_data:
