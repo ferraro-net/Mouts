@@ -1,0 +1,140 @@
+name: dockercompose10210883533883510718
+services:
+  ambev.developerevaluation.cache:
+    command:
+      - redis-server
+      - --requirepass
+      - ev4luAt10n
+    container_name: ambev_developer_evaluation_cache
+    image: redis:7.4.1-alpine
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 6379
+        published: "6379"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+        volume: {}
+  ambev.developerevaluation.database:
+    container_name: ambev_developer_evaluation_database
+    environment:
+      POSTGRES_DB: developer_evaluation
+      POSTGRES_PASSWORD: ev@luAt10n
+      POSTGRES_USER: developer
+    image: postgres:13
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  ambev.developerevaluation.nosql:
+    container_name: ambev_developer_evaluation_nosql
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: ev4luAt10n
+      MONGO_INITDB_ROOT_USERNAME: developer
+    image: mongo:8.0
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 27017
+        published: "27017"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: mongo_data
+        target: /data/db
+        volume: {}
+  ambev.developerevaluation.queue:
+    container_name: ambev_developer_evaluation_queue
+    environment:
+      RABBITMQ_DEFAULT_PASS: ev4luAt10n
+      RABBITMQ_DEFAULT_USER: developer
+    image: rabbitmq:3.13-management
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5672
+        published: "5672"
+        protocol: tcp
+      - mode: ingress
+        target: 15672
+        published: "15672"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: rabbitmq_data
+        target: /var/lib/rabbitmq
+        volume: {}
+  ambev.developerevaluation.webapi:
+    build:
+      context: C:\Git\mouts
+      dockerfile: src/Ambev.DeveloperEvaluation.WebApi/Dockerfile
+    container_name: ambev_developer_evaluation_webapi
+    depends_on:
+      ambev.developerevaluation.cache:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.database:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.nosql:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.queue:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    image: ambevdeveloperevaluationwebapi
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose10210883533883510718_default
+volumes:
+  mongo_data:
+    name: ambev_mongo_data
+  postgres_data:
+    name: ambev_postgres_data
+  rabbitmq_data:
+    name: ambev_rabbitmq_data
+  redis_data:
+    name: ambev_redis_data

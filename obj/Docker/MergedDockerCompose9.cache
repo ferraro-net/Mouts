@@ -1,0 +1,316 @@
+name: dockercompose10210883533883510718
+services:
+  ambev.developerevaluation.cache:
+    command:
+      - redis-server
+      - --requirepass
+      - ev4luAt10n
+    container_name: ambev_developer_evaluation_cache
+    image: redis:7.4.1-alpine
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 6379
+        published: "6379"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data
+        volume: {}
+  ambev.developerevaluation.database:
+    container_name: ambev_developer_evaluation_database
+    environment:
+      POSTGRES_DB: developer_evaluation
+      POSTGRES_PASSWORD: ev@luAt10n
+      POSTGRES_USER: developer
+    image: postgres:13
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  ambev.developerevaluation.nosql:
+    container_name: ambev_developer_evaluation_nosql
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: ev4luAt10n
+      MONGO_INITDB_ROOT_USERNAME: developer
+    image: mongo:8.0
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 27017
+        published: "27017"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: mongo_data
+        target: /data/db
+        volume: {}
+  ambev.developerevaluation.queue:
+    container_name: ambev_developer_evaluation_queue
+    environment:
+      RABBITMQ_DEFAULT_PASS: ev4luAt10n
+      RABBITMQ_DEFAULT_USER: developer
+    image: rabbitmq:3.13-management
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5672
+        published: "5672"
+        protocol: tcp
+      - mode: ingress
+        target: 15672
+        published: "15672"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: rabbitmq_data
+        target: /var/lib/rabbitmq
+        volume: {}
+  ambev.developerevaluation.webapi:
+    build:
+      context: C:\Git\mouts
+      dockerfile: src/Ambev.DeveloperEvaluation.WebApi/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Ambev.DeveloperEvaluation.WebApi
+      target: base
+    container_name: ambev_developer_evaluation_webapi
+    depends_on:
+      ambev.developerevaluation.cache:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.database:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.nosql:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.queue:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.worker:
+        condition: service_started
+        required: true
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /.nuget/fallbackpackages
+    image: ambevdeveloperevaluationwebapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages --additionalProbingPath /.nuget/fallbackpackages  "/app/bin/Debug/net8.0/Ambev.DeveloperEvaluation.WebApi.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        published: "8081"
+        protocol: tcp
+    tty: true
+    volumes:
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Git\mouts\src\Ambev.DeveloperEvaluation.WebApi
+        target: /app
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Git\mouts
+        target: /src
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\vsdbg\vs2017u5
+        target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\.nuget\packages\
+        target: /.nuget/packages
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+        target: /.nuget/fallbackpackages
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+        target: /TokenService.Proxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net8.0
+        target: /HotReloadProxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\HotReload
+        target: /HotReloadAgent
+        read_only: true
+        bind:
+          create_host_path: true
+  ambev.developerevaluation.worker:
+    build:
+      context: C:\Git\mouts
+      dockerfile: src/Ambev.DeveloperEvaluation.Worker/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Ambev.DeveloperEvaluation.Worker
+    container_name: ambev_developer_evaluation_worker
+    depends_on:
+      ambev.developerevaluation.cache:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.database:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.nosql:
+        condition: service_started
+        required: true
+      ambev.developerevaluation.queue:
+        condition: service_started
+        required: true
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      NUGET_FALLBACK_PACKAGES: /.nuget/fallbackpackages
+    image: ambevdeveloperevaluationworker:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /.nuget/packages --additionalProbingPath /.nuget/fallbackpackages  "/app/bin/Debug/net8.0/Ambev.DeveloperEvaluation.Worker.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    tty: true
+    volumes:
+      - type: bind
+        source: C:\Git\mouts\src\Ambev.DeveloperEvaluation.Worker
+        target: /app
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Git\mouts
+        target: /src
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\vsdbg\vs2017u5
+        target: /remote_debugger
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\.nuget\packages\
+        target: /.nuget/packages
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+        target: /.nuget/fallbackpackages
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\ferra\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\TokenService.Proxy\linux-x64\net6.0
+        target: /TokenService.Proxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Sdks\Microsoft.Docker.Sdk\tools\HotReloadProxy\linux-x64\net8.0
+        target: /HotReloadProxy
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\HotReload
+        target: /HotReloadAgent
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose10210883533883510718_default
+volumes:
+  mongo_data:
+    name: ambev_mongo_data
+  postgres_data:
+    name: ambev_postgres_data
+  rabbitmq_data:
+    name: ambev_rabbitmq_data
+  redis_data:
+    name: ambev_redis_data

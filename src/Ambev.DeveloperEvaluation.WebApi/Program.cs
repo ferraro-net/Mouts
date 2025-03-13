@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.IoC;
 using Ambev.DeveloperEvaluation.ORM;
+using Ambev.DeveloperEvaluation.Persistence.RabbitMQ;
 using Ambev.DeveloperEvaluation.WebApi.Middleware;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -52,8 +53,18 @@ public class Program
 
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+            builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
+            builder.Services.AddRebusMessaging(builder.Configuration);
+
+
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+                dbContext.Database.Migrate();
+            }
 
             if (app.Environment.IsDevelopment())
             {
@@ -69,6 +80,8 @@ public class Program
             app.UseBasicHealthChecks();
 
             app.MapControllers();
+
+            app.Services.SubscribeToIntegrationEvents();
 
             app.Run();
         }

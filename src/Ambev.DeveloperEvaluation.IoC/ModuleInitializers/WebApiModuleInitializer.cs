@@ -9,11 +9,10 @@ namespace Ambev.DeveloperEvaluation.IoC.ModuleInitializers
 {
     public class WebApiModuleInitializer : IModuleInitializer
     {
-        public void Initialize(WebApplicationBuilder builder)
+        public void Initialize(IServiceCollection services)
         {
-
-            builder.Services.AddControllers();
-            builder.Services.AddHealthChecks();
+            services.AddControllers();
+            services.AddHealthChecks();
         }
     }
 }

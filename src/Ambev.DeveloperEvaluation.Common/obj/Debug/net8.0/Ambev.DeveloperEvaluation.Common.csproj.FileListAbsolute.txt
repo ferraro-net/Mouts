@@ -1,0 +1,13 @@
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.deps.json
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.dll
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.pdb
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.csproj.AssemblyReference.cache
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.AssemblyInfoInputs.cache
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.AssemblyInfo.cs
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.csproj.CoreCompileInputs.cache
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.sourcelink.json
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.dll
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\refint\Ambev.DeveloperEvaluation.Common.dll
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Common.pdb
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Common\obj\Debug\net8.0\ref\Ambev.DeveloperEvaluation.Common.dll

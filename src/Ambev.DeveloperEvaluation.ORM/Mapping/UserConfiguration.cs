@@ -18,6 +18,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Password).IsRequired().HasMaxLength(100);
         builder.Property(u => u.Email).IsRequired().HasMaxLength(100);
         builder.Property(u => u.Phone).HasMaxLength(20);
+        builder.Property(u => u.CreatedAt).IsRequired();
+        builder.Property(u => u.UpdatedAt).IsRequired(false);
 
         builder.Property(u => u.Status)
             .HasConversion<string>()
