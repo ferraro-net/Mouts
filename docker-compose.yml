@@ -1,10 +1,6 @@
 services:
   ambev.developerevaluation.webapi:
-    container_name: ambev_developer_evaluation_webapi
     image: ${DOCKER_REGISTRY-}ambevdeveloperevaluationwebapi
-    build:
-      context: .
-      dockerfile: src/Ambev.DeveloperEvaluation.WebApi/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
@@ -28,11 +24,7 @@ services:
       - ambev_network
 
   ambev.developerevaluation.worker:
-    container_name: ambev_developer_evaluation_worker
     image: ${DOCKER_REGISTRY-}ambevdeveloperevaluationworker
-    build:
-      context: .
-      dockerfile: src/Ambev.DeveloperEvaluation.Worker/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=ambev_developer_evaluation_database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
@@ -50,7 +42,6 @@ services:
       - ambev_network
 
   ambev.developerevaluation.database:
-    container_name: ambev_developer_evaluation_database
     image: postgres:13
     environment:
       POSTGRES_DB: developer_evaluation
@@ -58,14 +49,12 @@ services:
       POSTGRES_PASSWORD: ev@luAt10n
     ports:
       - "5432:5432"
-    restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - ambev_network
 
   ambev.developerevaluation.nosql:
-    container_name: ambev_developer_evaluation_nosql
     image: mongo:8.0
     environment:
       MONGO_INITDB_ROOT_USERNAME: developer
@@ -78,7 +67,6 @@ services:
       - ambev_network
 
   ambev.developerevaluation.queue:
-    container_name: ambev_developer_evaluation_queue
     image: rabbitmq:3.13-management
     environment:
       RABBITMQ_DEFAULT_USER: developer
@@ -93,12 +81,9 @@ services:
 
 volumes:
   postgres_data:
-    name: ambev_postgres_data
   mongo_data:
-    name: ambev_mongo_data
   rabbitmq_data:
-    name: ambev_rabbitmq_data
 
 networks:
   ambev_network:
-    driver: bridge
+    driver: overlay
