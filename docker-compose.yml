@@ -1,5 +1,5 @@
 services:
-  ambev.developerevaluation.webapi:
+  ambev_developerevaluation_webapi:
     image: ${DOCKER_REGISTRY-}ambevdeveloperevaluationwebapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -11,19 +11,18 @@ services:
       - MongoDbSettings__CollectionName=Sales
       - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developer_evaluation_queue:5673
       - RabbitMqSettings__QueueName=Worker-Sales
-      - Jwt__SecretKey=a14a4ea06097293250cf89b033495bae94f7493703483f10fe661e5f459c5a697aedb85582bed201ad95b6c7eba70f57d59bc68737e348002e076487840cff042721a0020e3ab9db34426c617eb59f49691c9d5c041d4ab120b7d6efbdfe5e8a37fb13ea0aa6e6c6aed881a7e41a913d10a08ac639c371240586b38c9fbb6d213752e7216abeab82c0482e1f17af98e7e78d17d86a68ecda2e537a39aab4c0cb534b7e74e6acfb93e383029e32fba3ff339abdd74e4aa9203255bc92e2a2cedc5f1ca82c7292a8ea89150ee732250a68b982f70185614822bec3c02f9e073194790396618fc50b25479f38f5bb799b6cbaf340e1756d3b1991c5d449a0a095c7
     ports:
       - "8080:8080"
       - "8081:8081"
     depends_on:
-      - ambev.developerevaluation.database
-      - ambev.developerevaluation.nosql
-      - ambev.developerevaluation.queue
-      - ambev.developerevaluation.worker
+      - ambev_developerevaluation_database
+      - ambev_developerevaluation_nosql
+      - ambev_developerevaluation_queue
+      - ambev_developerevaluation_worker
     networks:
       - ambev_network
 
-  ambev.developerevaluation.worker:
+  ambev_developerevaluation_worker:
     image: ${DOCKER_REGISTRY-}ambevdeveloperevaluationworker
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -33,15 +32,14 @@ services:
       - MongoDbSettings__CollectionName=Sales
       - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developer_evaluation_queue:5673
       - RabbitMqSettings__QueueName=Worker-Sales
-      - Jwt__SecretKey=a14a4ea06097293250cf89b033495bae94f7493703483f10fe661e5f459c5a697aedb85582bed201ad95b6c7eba70f57d59bc68737e348002e076487840cff042721a0020e3ab9db34426c617eb59f49691c9d5c041d4ab120b7d6efbdfe5e8a37fb13ea0aa6e6c6aed881a7e41a913d10a08ac639c371240586b38c9fbb6d213752e7216abeab82c0482e1f17af98e7e78d17d86a68ecda2e537a39aab4c0cb534b7e74e6acfb93e383029e32fba3ff339abdd74e4aa9203255bc92e2a2cedc5f1ca82c7292a8ea89150ee732250a68b982f70185614822bec3c02f9e073194790396618fc50b25479f38f5bb799b6cbaf340e1756d3b1991c5d449a0a095c7
     depends_on:
-      - ambev.developerevaluation.database
-      - ambev.developerevaluation.nosql
-      - ambev.developerevaluation.queue
+      - ambev_developerevaluation_database
+      - ambev_developerevaluation_nosql
+      - ambev_developerevaluation_queue
     networks:
       - ambev_network
 
-  ambev.developerevaluation.database:
+  ambev_developerevaluation_database:
     image: postgres:13
     environment:
       POSTGRES_DB: developer_evaluation
@@ -54,7 +52,7 @@ services:
     networks:
       - ambev_network
 
-  ambev.developerevaluation.nosql:
+  ambev_developerevaluation_nosql:
     image: mongo:8.0
     environment:
       MONGO_INITDB_ROOT_USERNAME: developer
@@ -66,7 +64,7 @@ services:
     networks:
       - ambev_network
 
-  ambev.developerevaluation.queue:
+  ambev_developerevaluation_queue:
     image: rabbitmq:3.13-management
     environment:
       RABBITMQ_DEFAULT_USER: developer
@@ -86,4 +84,4 @@ volumes:
 
 networks:
   ambev_network:
-    driver: overlay
+    driver: bridge
