@@ -13,16 +13,26 @@ Este projeto consiste em uma API desenvolvida em .NET Core que permite a criaç�
   - [GitHub](https://github.com/dotnet/core)
 - **C#**: A modern object-oriented programming language developed by Microsoft.
   - [GitHub](https://github.com/dotnet/csharplang)
+- **Mediator**: A behavioral design pattern that helps reduce chaotic dependencies between objects. It allows loose coupling by encapsulating object interaction.
+  - [GitHub](https://github.com/jbogard/MediatR)
+- **Automapper**: A convention-based object-object mapper that simplifies the process of mapping one object to another.
+  - [GitHub](https://github.com/AutoMapper/AutoMapper)
+- **Rebus**: A lean service bus implementation for .NET, providing a simple and flexible way to do messaging and queueing in .NET applications.
+  - [GitHub](https://github.com/rebus-org/Rebus)
 
 ### Testing:
-- **xUnit**: A free, open source, community-focused unit testing tool for the .NET Framework.
-  - [GitHub](https://github.com/xunit/xunit)
+- **Faker**: A library for generating fake data for testing purposes, allowing for more realistic and diverse test scenarios.
+  - [GitHub](https://github.com/bchavez/Bogus)
+- **NSubstitute**: A friendly substitute for .NET mocking libraries, used for creating test doubles in unit testing.
+  - [GitHub](https://github.com/nsubstitute/NSubstitute)
 
 ### Databases:
 - **PostgreSQL**: A powerful, open source object-relational database system.
   - [GitHub](https://github.com/postgres/postgres)
 - **MongoDB**: A general purpose, document-based, distributed database.
   - [GitHub](https://github.com/mongodb/mongo)
+- **EF Core**: Entity Framework Core, a lightweight, extensible, and cross-platform version of Entity Framework, used for data access and object-relational mapping.
+  - [GitHub](https://github.com/dotnet/efcore)
 
 ### Mensageria:
 - **RabbitMQ**: Um broker de mensagens amplamente utilizado para comunicação assíncrona entre serviços.
