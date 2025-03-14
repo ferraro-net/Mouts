@@ -1,97 +1,18 @@
 name: dockercompose10210883533883510718
 services:
-  ambev_developerevaluation_database:
-    environment:
-      POSTGRES_DB: developer_evaluation
-      POSTGRES_PASSWORD: ev@luAt10n
-      POSTGRES_USER: developer
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - pg_isready -U developer -d developer_evaluation
-      timeout: 5s
-      interval: 10s
-      retries: 5
-    image: postgres:13
-    networks:
-      default: null
-    ports:
-      - mode: ingress
-        target: 5432
-        published: "5432"
-        protocol: tcp
-    volumes:
-      - type: volume
-        source: postgres_data
-        target: /var/lib/postgresql/data
-        volume: {}
-  ambev_developerevaluation_nosql:
-    environment:
-      MONGO_INITDB_ROOT_PASSWORD: ev4luAt10n
-      MONGO_INITDB_ROOT_USERNAME: developer
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - echo 'db.runCommand("ping").ok' | mongosh localhost:27017 --quiet
-      timeout: 5s
-      interval: 10s
-      retries: 5
-    image: mongo:8.0
-    networks:
-      default: null
-    ports:
-      - mode: ingress
-        target: 27017
-        published: "27017"
-        protocol: tcp
-    volumes:
-      - type: volume
-        source: mongo_data
-        target: /data/db
-        volume: {}
-  ambev_developerevaluation_queue:
-    environment:
-      RABBITMQ_DEFAULT_PASS: ev4luAt10n
-      RABBITMQ_DEFAULT_USER: developer
-    healthcheck:
-      test:
-        - CMD
-        - rabbitmq-diagnostics
-        - check_running
-      timeout: 5s
-      interval: 10s
-      retries: 5
-    image: rabbitmq:3.13-management
-    networks:
-      default: null
-    ports:
-      - mode: ingress
-        target: 5672
-        published: "5672"
-        protocol: tcp
-      - mode: ingress
-        target: 15672
-        published: "15672"
-        protocol: tcp
-    volumes:
-      - type: volume
-        source: rabbitmq_data
-        target: /var/lib/rabbitmq
-        volume: {}
   ambev_developerevaluation_webapi:
     build:
       context: C:\Git\mouts
       dockerfile: src/Ambev.DeveloperEvaluation.WebApi/Dockerfile
-    depends_on:
-      ambev_developerevaluation_database:
-        condition: service_healthy
-        required: true
-      ambev_developerevaluation_nosql:
-        condition: service_healthy
-        required: true
-      ambev_developerevaluation_queue:
-        condition: service_healthy
-        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
+      MongoDbSettings__CollectionName: Sales
+      MongoDbSettings__ConnectionString: mongodb://developer:ev4luAt10n@localhost:27017
+      MongoDbSettings__DatabaseName: DeveloperEvaluation
+      RabbitMqSettings__ConnectionString: amqp://developer:ev4luAt10n@localhost:5672
+      RabbitMqSettings__QueueName: Worker-Sales
     image: ambevdeveloperevaluationwebapi
     networks:
       default: null
@@ -100,14 +21,6 @@ services:
         target: 8080
         published: "8080"
         protocol: tcp
-    tty: true
 networks:
   default:
     name: dockercompose10210883533883510718_default
-volumes:
-  mongo_data:
-    name: dockercompose10210883533883510718_mongo_data
-  postgres_data:
-    name: dockercompose10210883533883510718_postgres_data
-  rabbitmq_data:
-    name: dockercompose10210883533883510718_rabbitmq_data

@@ -5,16 +5,16 @@ services:
       dockerfile: src/Ambev.DeveloperEvaluation.WebApi/Dockerfile
     image: ambevdeveloperevaluationwebapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Host=localhost;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
-      - MongoDbSettings__ConnectionString=mongodb://developer:ev4luAt10n@localhost:27017
+      - ConnectionStrings__DefaultConnection=Host=ambev_developerevaluation_database;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
+      - MongoDbSettings__ConnectionString=mongodb://developer:ev4luAt10n@ambev_developerevaluation_nosql:27017
       - MongoDbSettings__DatabaseName=DeveloperEvaluation
       - MongoDbSettings__CollectionName=Sales
-      - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@localhost:5672
+      - RabbitMqSettings__ConnectionString=amqp://developer:ev4luAt10n@ambev_developerevaluation_queue:5672
       - RabbitMqSettings__QueueName=Worker-Sales
     ports:
-      - "8080:8080"
+      - "8080:8080"    
     depends_on:
       ambev_developerevaluation_database:
         condition: service_healthy

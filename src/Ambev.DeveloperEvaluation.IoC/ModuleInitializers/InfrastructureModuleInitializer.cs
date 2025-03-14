@@ -24,5 +24,11 @@ public class InfrastructureModuleInitializer : IModuleInitializer
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IRequestLogService, RequestLogService>();
         services.AddScoped<IEventDispatcher, RabbitMQEventDispatcher>();
+
+        services.AddScoped<IHandleMessages<SaleCreatedEvent>, SaleCreatedEventHandler>();
+        services.AddScoped<IHandleMessages<SaleUpdatedEvent>, SaleUpdatedEventHandler>();
+        services.AddScoped<IHandleMessages<SaleDeletedEvent>, SaleDeletedEventHandler>();
+        services.AddScoped<IHandleMessages<SaleDeletedItemEvent>, SaleDeletedItemEventHandler>();
+
     }
 }

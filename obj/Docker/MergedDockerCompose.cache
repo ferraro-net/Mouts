@@ -93,7 +93,7 @@ services:
         condition: service_healthy
         required: true
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=developer_evaluation;Username=developer;Password=ev@luAt10n
       MongoDbSettings__CollectionName: Sales
@@ -110,6 +110,13 @@ services:
         published: "8080"
         protocol: tcp
     tty: true
+    volumes:
+      - type: bind
+        source: C:\Git\mouts\src\Ambev.DeveloperEvaluation.WebApi\appsettings.json
+        target: /app/appsettings.json
+        read_only: true
+        bind:
+          create_host_path: true
 networks:
   default:
     name: dockercompose10210883533883510718_default

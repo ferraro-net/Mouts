@@ -16,6 +16,11 @@ COPY src/Ambev.DeveloperEvaluation.Persistence/Ambev.DeveloperEvaluation.Persist
 
 RUN dotnet restore "./src/Ambev.DeveloperEvaluation.WebApi/Ambev.DeveloperEvaluation.WebApi.csproj"
 COPY . .
+
+COPY src/Ambev.DeveloperEvaluation.WebApi/appsettings*.json src/Ambev.DeveloperEvaluation.WebApi/
+COPY src/Ambev.DeveloperEvaluation.WebApi/appsettings*.json /app/publish/
+
+
 WORKDIR "/src/src/Ambev.DeveloperEvaluation.WebApi"
 RUN dotnet build "./Ambev.DeveloperEvaluation.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

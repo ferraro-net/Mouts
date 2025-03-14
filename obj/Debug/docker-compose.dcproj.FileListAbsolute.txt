@@ -17,9 +17,9 @@ C:\Git\mouts\bin\Debug\Ambev.DeveloperEvaluation.Application.dll
 C:\Git\mouts\bin\Debug\Ambev.DeveloperEvaluation.Domain.dll
 C:\Git\mouts\bin\Debug\Ambev.DeveloperEvaluation.Persistence.dll
 C:\Git\mouts\bin\Debug\Serilog.dll
+C:\Git\mouts\bin\Debug\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Git\mouts\bin\Debug\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Git\mouts\bin\Debug\Ambev.DeveloperEvaluation.IoC.dll
-C:\Git\mouts\bin\Debug\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Git\mouts\bin\Debug\Swashbuckle.AspNetCore.Swagger.dll
 C:\Git\mouts\bin\Debug\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Git\mouts\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -49,8 +49,8 @@ C:\Git\mouts\bin\Debug\Rebus.dll
 C:\Git\mouts\bin\Debug\Rebus.RabbitMq.dll
 C:\Git\mouts\bin\Debug\MongoDB.Driver.dll
 C:\Git\mouts\bin\Debug\Rebus.ServiceProvider.dll
-C:\Git\mouts\bin\Debug\Microsoft.OpenApi.dll
 C:\Git\mouts\bin\Debug\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Git\mouts\bin\Debug\Microsoft.OpenApi.dll
 C:\Git\mouts\bin\Debug\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Git\mouts\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Git\mouts\bin\Debug\Microsoft.IdentityModel.Protocols.dll
