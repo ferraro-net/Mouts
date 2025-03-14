@@ -19,7 +19,11 @@
 		<ProjectReference Include="..\Ambev.DeveloperEvaluation.Application\Ambev.DeveloperEvaluation.Application.csproj" />
 		<ProjectReference Include="..\Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj" />
 		<ProjectReference Include="..\Ambev.DeveloperEvaluation.Common\Ambev.DeveloperEvaluation.Common.csproj" />
-		<ProjectReference Include="..\Ambev.DeveloperEvaluation.Persistence\Ambev.DeveloperEvaluation.Persistence.csproj" />
+		<ProjectReference Include="..\Ambev.DeveloperEvaluation.Persistence\Ambev.DeveloperEvaluation.Persistence.csproj">
+		  <Private>True</Private>
+		  <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+		  <ReferenceOutputAssembly>True</ReferenceOutputAssembly>
+		</ProjectReference>
 	</ItemGroup>
 
 </Project>

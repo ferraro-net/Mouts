@@ -3,7 +3,9 @@ C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.De
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Application.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Domain.dll
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Domain.pdb
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Application.csproj.AssemblyReference.cache
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Application.GeneratedMSBuildEditorConfig.editorconfig
@@ -16,5 +18,3 @@ C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\obj\Debug\net8.0\Ambev.De
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\obj\Debug\net8.0\refint\Ambev.DeveloperEvaluation.Application.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\obj\Debug\net8.0\Ambev.DeveloperEvaluation.Application.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\obj\Debug\net8.0\ref\Ambev.DeveloperEvaluation.Application.dll
-C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.dll
-C:\Git\mouts\src\Ambev.DeveloperEvaluation.Application\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.pdb

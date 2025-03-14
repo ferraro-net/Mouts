@@ -5,10 +5,12 @@ C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperE
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Domain.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.ORM.dll
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Domain.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Application.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.ORM.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Common.pdb
+C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\Ambev.DeveloperEvaluation.IoC.csproj.AssemblyReference.cache
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\Ambev.DeveloperEvaluation.IoC.GeneratedMSBuildEditorConfig.editorconfig
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\Ambev.DeveloperEvaluation.IoC.AssemblyInfoInputs.cache
@@ -20,5 +22,3 @@ C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\Ambev.DeveloperE
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\refint\Ambev.DeveloperEvaluation.IoC.dll
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\Ambev.DeveloperEvaluation.IoC.pdb
 C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\obj\Debug\net8.0\ref\Ambev.DeveloperEvaluation.IoC.dll
-C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.dll
-C:\Git\mouts\src\Ambev.DeveloperEvaluation.IoC\bin\Debug\net8.0\Ambev.DeveloperEvaluation.Persistence.pdb
