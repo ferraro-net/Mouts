@@ -8,8 +8,11 @@ using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.Persistence.RabbitMQ;
 using Ambev.DeveloperEvaluation.WebApi.Middleware;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 namespace Ambev.DeveloperEvaluation.WebApi;
 
@@ -22,7 +25,7 @@ public class Program
             Log.Information("Starting web application");
 
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
+            
             var urls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? "http://localhost:8080";
             Log.Information("ASPNETCORE_URLS: {Url}", urls);
             builder.WebHost.UseUrls(urls);
@@ -42,7 +45,31 @@ public class Program
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.AddBasicHealthChecks();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Description = "Insira o token JWT assim: Bearer {seu token}",
+                    Name = "Authorization",
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                {
+                    {
+                        new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                        {
+                            Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                            {
+                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
 
             builder.Services.AddDbContext<DefaultContext>(options =>
                 options.UseNpgsql(
@@ -52,6 +79,8 @@ public class Program
             );
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
+            builder.Services.AddAuthorization();
+
             builder.RegisterDependencies();
             builder.Services.AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationLayer).Assembly);
 
@@ -70,7 +99,6 @@ public class Program
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
 
-            // Espera pelo banco de dados estar pronto antes de rodar a migração
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<DefaultContext>();
@@ -106,9 +134,8 @@ public class Program
             app.UseBasicHealthChecks();
             app.MapControllers();
 
-            // Espera RabbitMQ antes de consumir mensagens
             Log.Information("Waiting for RabbitMQ to be ready...");
-            Task.Delay(5000).Wait(); // Espera 5s antes de conectar ao RabbitMQ
+            Task.Delay(5000).Wait();
             app.Services.SubscribeToIntegrationEvents();
 
             Log.Information("Application started successfully.");

@@ -11,7 +11,7 @@ namespace Ambev.DeveloperEvaluation.Common.Security
     {
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            //services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             var secretKey = configuration["Jwt:SecretKey"]?.ToString();
             ArgumentException.ThrowIfNullOrWhiteSpace(secretKey);

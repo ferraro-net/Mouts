@@ -12,6 +12,7 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSaleItem;
 using Ambev.DeveloperEvaluation.Application.Sales.DeleteSaleItem;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
 {
@@ -28,6 +29,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -50,6 +52,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             });
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ApiResponseWithData<GetSaleResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -77,6 +80,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             });
         }
 
+        [Authorize]
         [HttpPut]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -115,6 +119,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             });
         }
 
+        [Authorize]
         [HttpDelete("{id}/cancel")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -137,6 +142,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             });
         }
 
+        [Authorize]
         [HttpDelete("cancel-item/{id}")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
