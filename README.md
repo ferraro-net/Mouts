@@ -24,6 +24,10 @@ Este projeto consiste em uma API desenvolvida em .NET Core que permite a criaç�
 - **MongoDB**: A general purpose, document-based, distributed database.
   - [GitHub](https://github.com/mongodb/mongo)
 
+### Mensageria:
+- **RabbitMQ**: Um broker de mensagens amplamente utilizado para comunicação assíncrona entre serviços.
+  - [GitHub](https://github.com/rabbitmq)
+
 ## Configurando o Projeto
 
 Clone o repositório:
@@ -58,3 +62,4 @@ Se você deseja contribuir com melhorias ou correções para o projeto Giga Hous
 Agradecemos sua colaboração! 🙌
 
 Este projeto foi desenvolvido com o intuito de demonstrar boas práticas de desenvolvimento e facilitar o gerenciamento de projetos através de uma API simples e eficiente.
+
